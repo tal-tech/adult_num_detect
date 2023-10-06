@@ -1,0 +1,80 @@
+Metadata-Version: 2.1
+Name: mmdet
+Version: 2.1.0+84fbb2c
+Summary: Open MMLab Detection Toolbox and Benchmark
+Home-page: https://github.com/open-mmlab/mmdetection
+Author: OpenMMLab
+Author-email: chenkaidev@gmail.com
+License: Apache License 2.0
+Keywords: computer vision,object detection
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Provides-Extra: all
+Provides-Extra: tests
+Provides-Extra: build
+Provides-Extra: optional
+
+# Body_Students_Detection Based on MMdetection
+
+
+## Requirements
+
+- mmdetection(环境配置参考：https://mmdetection.readthedocs.io/en/latest/install.html#install-mmdetection)
+
+- 或者按照下述步骤进行安装
+
+```
+
+1.创建与激活conda虚拟环境
+  conda create -n open-mmlab python=3.7 -y
+  conda activate open-mmlab
+2.安装pytorch，选择与cuda版本一致的cudatoolkit
+	conda install pytorch cudatoolkit=10.1 torchvision 
+3.安装其他依赖库	
+  pip install mvcv==0.6.2
+  pip install -r requirements/build.txt
+  pip install -v -e .
+  pip install pycocotools
+```
+
+
+
+## Usage
+
+#### data prepare
+
+1. 按照coco格式准备数据
+2. 修改configs里的相关文件，详情可以参考mmdection官方文档
+
+#### train
+
+```
+# 单卡
+python tools/train.py configs/cascade_rcnn/cascade_rcnn_r50_fpn_1x_student.py
+
+# 多卡
+bash /workspace/PX/adult_children_recognition/mmdetection/tools/dist_train.sh configs/cascade_rcnn/cascade_rcnn_r50_fpn_1x_student.py 4
+```
+
+
+#### test
+
+
+```
+# metrics
+
+python ./adult_student_utils/test_adult_student.py config configs/cascade_rcnn/cascade_rcnn_r50_fpn_1x_student.py /workspace/PX/adult_children_recognition/mmdetection/work_dirs/cascade_rcnn_r50_fpn_1x_student/epoch_12.pth --score-thr 0.5
+
+# vis show
+python ./adult_student_utils/vis_show.py config configs/cascade_rcnn/cascade_rcnn_r50_fpn_1x_student.py /workspace/PX/adult_children_recognition/mmdetection/work_dirs/cascade_rcnn_r50_fpn_1x_student/epoch_12.pth --score-thr 0.5
+
+
+# interface
+cd $HOME/Body_Student_Detection_v1.0.0
+python ./adult_student_utils/test_demo.py
+```
